@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import BookController  from './controllers/book'
+import UserController from './controllers/user'
 const config = require('./config/config').get(process.env.NODE_ENV)
 const app = express()
 
@@ -12,7 +13,7 @@ app.use(cookieParser())
 
 //INITIALIZE CONTROLLERS//
 const bookController =  new BookController()
-
+const userController = new UserController()
 
 
 
@@ -21,7 +22,7 @@ const bookController =  new BookController()
 
 //REGISTER ROUTES
 bookController.registerRoutes(app)
-
+userController.registerRoutes(app)
 
 
 
@@ -30,18 +31,7 @@ bookController.registerRoutes(app)
 
 // // POST //
 
- app.post('/api/book', (req, res) => {
-    
-    const book = new Book(req.body)
-    book.save().
-        then((book) => {
-            res.status(200).json({
-                
-            })
-        }, (e) => {
-            res.status(400).send(e)
-        })
-})
+
 
 // // UPDATE //
 
@@ -60,7 +50,6 @@ bookController.registerRoutes(app)
 // })
 
 // // DELETE //
-
 // app.delete()
 
 

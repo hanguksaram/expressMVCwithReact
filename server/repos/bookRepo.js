@@ -18,5 +18,9 @@ export default class BookRepo {
     changeBook(bookDto) {
          return Book.findByIdAndUpdate(bookDto._id, bookDto, {new: true})
     }
+    deleteBook(id) {
+        return Book.findByIdAndRemove(id)
+            
+    }
 
 }

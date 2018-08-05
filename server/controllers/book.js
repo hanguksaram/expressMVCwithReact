@@ -58,7 +58,15 @@ export default class BookController {
                 res.status(400).send(e)
             })
     }
-    deleteBook(){}
+    deleteBook(req, res){
+        
+        const id = req.query.id
+        this._bookRepo.deleteBook(id)
+            .then((data) => {
+                res.json(true)
+            },
+        (e) => res.status(400).send(e))
+    }
     updateBook(req, res){
         this._bookRepo.changeBook(req.body)
             .then((book) => {

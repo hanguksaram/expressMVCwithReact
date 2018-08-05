@@ -7,7 +7,11 @@ const booksRoute = {
 }
 
 const usersRoute = {
-
+    login: '/api/user/login',
+    getUsers: '/api/users', 
+    postUser: '/api/user', 
+    deleteUser: '/api/user', 
+    updateUser: '/api/user'
 }
 
 export {booksRoute, usersRoute}
