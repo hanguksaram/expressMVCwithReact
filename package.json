@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "sudo node server/server.js",
-    "server": "sudo nodemon server/index.js"
+    "start": "node server/index.js",
+    "server": "nodemon server/index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "engines": {
-    "node": "8.10.0"
+    "node": "10.8.0"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +28,7 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
     "moment-js": "^1.1.15",
-    "mongoose": "^5.2.6"
+    "mongoose": "^5.2.6",
+    "react-fontawesome": "^1.6.1"
   }
 }

@@ -1,6 +1,6 @@
 import BookRepo from '../repos/bookRepo'
 import { booksRoute } from '../routes/routes'
-const { getBook ,getBooks, postBook, deleteBook, updateBook } = booksRoute
+const {getBooksByOwner ,getBook ,getBooks, postBook, deleteBook, updateBook } = booksRoute
 
 
 export default class BookController {
@@ -16,6 +16,7 @@ export default class BookController {
         app.post(postBook, this.postBook.bind(this))
         app.delete(deleteBook, this.deleteBook.bind(this))
         app.put(updateBook, this.updateBook.bind(this))
+        app.get(getBooksByOwner, this.getOwnerBooks.bind(this))
     }
 
 
@@ -75,6 +76,16 @@ export default class BookController {
                 res.status(400).send(e)
             })
 
+    }
+    getOwnerBooks(req, res) {
+        
+        const ownerId = req.params.ownerId
+        this._bookRepo.getBooksByOwnerId(ownerId)
+            .then((books) => {
+                if(!books)
+                    return res.sendStatus(404)
+                res.json(books)
+            }, (e) => json.status(400).send(e))
     }
 
 

@@ -60,10 +60,33 @@ userSchema.methods.comparePasswords = function(password) {
     })
 }
    
+userSchema.methods.generateToken = function () {
     
+    const user = this
+    const token = jwt.sign(user._id.toHexString(), config.SECRET)
+    user.token = token
+    return user.save()
+           
     
-    
+}
 
+userSchema.methods.deleteToken = function () {
+    const user = this
+
+    return user.update({$unset: {token: 1}})
+}
+    
+userSchema.statics.findByToken = function (token) {
+    const user = this
+
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, config.SECRET, (err, decode) => {  
+        if (err) reject(err)
+            resolve(user.findOne({"_id": decode, "token": token})
+            )
+        })
+    })
+}
 
 const User = mongoose.model('User', userSchema)
 

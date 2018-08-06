@@ -11,6 +11,9 @@ export default class BookRepo {
     getBook(id){
         return Book.findById(id)
     }
+    getBooksByOwnerId(ownerId) {
+        return Book.find({ownerId})
+    }
     addBook(bookDto){
         const book = new Book(bookDto)
         return book.save()

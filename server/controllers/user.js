@@ -1,6 +1,6 @@
 import UserRepo from '../repos/userRepo'
 import { usersRoute } from '../routes/routes'
-
+import { auth } from '../middleware/auth'
 
 
 export default class UserController {
@@ -16,6 +16,8 @@ export default class UserController {
         app.post(usersRoute.postUser, this.createUser.bind(this))
         app.delete(usersRoute.deleteUser, this.deleteUser.bind(this))
         app.put(usersRoute.updateUser, this.updateUser.bind(this))
+        app.get(usersRoute.logout, auth, this.logout.bind(this))
+        app.get(usersRoute.isAuth, auth, this.isAuthorised.bind(this))
     }
 
 
@@ -33,22 +35,54 @@ export default class UserController {
                     })
             }, (e) => res.send(e))
     }
+    isAuthorised(req, res) {
+        res.json({
+            isAuth: true,
+            id: req.user._id,
+            email:req.user.email,
+    })
+    }
+    login(req, res) {
 
-    login(req, res){
-        
         const userDto = req.body
         this._userRepo.findUser(userDto)
             .then((user) => {
-                if (!user) 
+                if (!user)
                     return res.status(404)
                 user.comparePasswords(userDto.password)
                     .then(() => {
-                        res.json(user)    
+                        return user.generateToken()
+                            .then((user) => {
+                                res.cookie('auth', user.token, 
+                                {expires: new Date(Date.now + 1200000)})
+                                    .json({
+                                        isAuth: true,
+                                        id: user._id,
+                                        email: user.email
+                                    })
+                            })
+
                     }).catch((e) => res.status(400).send(e))
             })
     }
+
+    logout (req, res) {
+        
+
+        req.user.deleteToken()
+            .then((user) => {
+                
+                res.clearCookie('auth').sendStatus(200)
+            }, (e) => {res.sendStatus(400)})
+    }
     getUser(){}
-    getAllUsers(){}
+    getAllUsers(req, res){
+
+        this._userRepo.getAllUsers()
+            .then((users) => {
+                res.json(users)
+            }, (e) => {res.status(400).send(e)})
+    }
     deleteUser(){}
     updateUser(){}
 

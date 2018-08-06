@@ -13,5 +13,9 @@ export default class UserRepo {
         
         return User.findOne({'email': userDto.email})
     }
+    getAllUsers() {
+
+        return User.find({})
+    }
 
 }
