@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
 import { pullBooks, pullDefaultBooks, getBooks} from '../actions/book'
 class HomeContainer extends Component {
 
@@ -15,21 +16,21 @@ class HomeContainer extends Component {
     }
 
     renderBooks = () => {
-        const books = []
-        for (const key in this.props.books) {
-            books.push(this.props.books[key])
-        }
-        console.dir(books)
-        return books.map((book,i) => {
+        
+        
+        return this.props.books.bookList.map((book,i) => {
                 return (
+                    <Link key={i} to={'/book/'+ book._id}>
                     <div key= {i}>
-                        {book.review}
+                        {book.name}
                      </div>
+                     </Link>
                 )
             })
         }
     getMoreBooks = () => {
-        this.props.getTestBooks(this.state.skip, this.state.limit)
+        this.props.getTestBooks(this.state.skip, this.state.limit, this.props.books.bookList)
+        console.log(this.props.books.bookList, "fromHome")
         this.setState({skip: this.state.skip + this.state.limit})
     }
     
@@ -38,7 +39,7 @@ class HomeContainer extends Component {
         return (
             <div>
                 wtf
-                {!!this.props.books && this.renderBooks()} 
+             {!!this.props.books.bookList && this.renderBooks()}  
            
             <button onClick={this.getMoreBooks}>gerMoreBooks</button>
             </div>
@@ -61,7 +62,7 @@ const mapDispatchToProps = (dispatch) => {
 
         getBookss: (skip, limit) => {dispatch(pullBooks(skip, limit))},
         getDefaultBooks: () => {dispatch(pullDefaultBooks())},
-        getTestBooks: (skip, limit) => {dispatch(getBooks(skip, limit))},
+        getTestBooks: (skip, limit, add) => {dispatch(getBooks(skip, limit, add))},
         
     }
 }

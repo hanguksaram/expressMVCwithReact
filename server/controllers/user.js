@@ -1,6 +1,7 @@
 import UserRepo from '../repos/userRepo'
 import { usersRoute } from '../routes/routes'
 import { auth } from '../middleware/auth'
+import user_reducer from '../../client/src/reducers/user_reducer';
 
 
 export default class UserController {
@@ -18,6 +19,7 @@ export default class UserController {
         app.put(usersRoute.updateUser, this.updateUser.bind(this))
         app.get(usersRoute.logout, auth, this.logout.bind(this))
         app.get(usersRoute.isAuth, auth, this.isAuthorised.bind(this))
+        app.get('/api/users/:id',this.getUser.bind(this))
     }
 
 
@@ -75,7 +77,17 @@ export default class UserController {
                 res.clearCookie('auth').sendStatus(200)
             }, (e) => {res.sendStatus(400)})
     }
-    getUser(){}
+    getUser(req, res){
+        this._userRepo.findUserById(req.params.id)
+            .then((user) => {
+                if (!user) 
+                    return res.sendStatus(404)
+                res.json({
+                    id: user._id,
+                    name: user.email
+                })
+            }, (e) => res.status(500).send(e))
+    }
     getAllUsers(req, res){
 
         this._userRepo.getAllUsers()

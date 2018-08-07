@@ -17,5 +17,8 @@ export default class UserRepo {
 
         return User.find({})
     }
+    findUserById(id) {
+        return User.findById(id)
+    }
 
 }

@@ -1,11 +1,11 @@
 
 const defaultState = []
 
-export default ( state = defaultState, action) => {
+export default ( state = {}, action) => {
     switch (action.type) {
 
         case 'BOOK_LIST':
-            return [...state, ...action.payload]
+            return {...state, bookList: action.payload}
         default:
             return state
     }
