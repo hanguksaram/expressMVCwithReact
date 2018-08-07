@@ -28,6 +28,8 @@ export default class BookController {
         const id = req.query.id
         this._bookRepo.getBook(id)
             .then((book) => {
+                if (!book)
+                    return res.sendStatus(404)
                 res.json(book)
             }, (e) => {
                 res.status(400).send(e)

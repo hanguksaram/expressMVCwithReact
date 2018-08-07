@@ -8,6 +8,18 @@ const booksRoute = {
     getBooksByOwner: '/api/book/:ownerId'
 }
 
+const getBooks = (skip, limit) => {
+    
+    const books = axios.get(`${booksRoute.getBooks}?skip=${skip}&limit=${limit}&order=asc`)
+        .then(response => response.data)
+    
+    return {
+        type: 'BOOK_LIST',
+        payload: books
+    }
+}
+
+
 const getBookList = (books) => {
     return {
         type: 'BOOK_LIST',
@@ -35,4 +47,4 @@ const pullBooks = (skip, limit) => {
 }
   
 
-export { pullBooks, pullDefaultBooks , getBookList}
+export { pullBooks, pullDefaultBooks , getBookList, getBooks}
