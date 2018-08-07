@@ -6,7 +6,9 @@ class Book extends Component {
 
     componentWillMount(){
         console.log(this.props)
-        
+
+
+        this.props.getAuthor(this.props.match.params.id)
     }
     renderBook = () => {
        const book = this.props.books.find((book) => {
@@ -19,7 +21,8 @@ class Book extends Component {
     render(){
         return (
             <div>
-                {!!this.props.books && this.renderBook()}
+                kek
+                {/* {!!this.props.books && this.renderBook()} */}
             </div>
         )
     }
@@ -27,7 +30,7 @@ class Book extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getAuthor: () => (dispatch(getBookWithAuthor()))
+        getAuthor: (bookId) => (dispatch(getBookWithAuthor(bookId)))
     }
 }
 

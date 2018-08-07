@@ -1,10 +1,10 @@
 const booksRoute = {
-    getBook: '/api/book',
+    getBook: '/api/books/:id',
     getBooks: '/api/books',
     postBook: '/api/book',
     deleteBook: '/api/book',
     updateBook:'/api/book',
-    getBooksByOwner: '/api/book/:ownerId'
+    getBooksByOwner: '/api/books/'
 }
 
 const usersRoute = {

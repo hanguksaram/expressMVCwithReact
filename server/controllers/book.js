@@ -16,7 +16,7 @@ export default class BookController {
         app.post(postBook, this.postBook.bind(this))
         app.delete(deleteBook, this.deleteBook.bind(this))
         app.put(updateBook, this.updateBook.bind(this))
-        app.get(getBooksByOwner, this.getOwnerBooks.bind(this))
+        // app.get(getBooksByOwner, this.getOwnerBooks.bind(this))
     }
 
 
@@ -25,7 +25,7 @@ export default class BookController {
     //HANDLERS//
     getBook(req, res) {
         
-        const id = req.query.id
+        const id = req.params.id
         this._bookRepo.getBook(id)
             .then((book) => {
                 if (!book)
