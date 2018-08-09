@@ -10,19 +10,16 @@ class Book extends Component {
 
         this.props.getAuthor(this.props.match.params.id)
     }
-    renderBook = () => {
-       const book = this.props.books.find((book) => {
-            return book._id === this.props.match.params.id
-            
-        })
+  
         
-        return <div>{book.name}</div>
-    }
+     
+    
     render(){
+       
         return (
             <div>
                 kek
-                {/* {!!this.props.books && this.renderBook()} */}
+                 {!!this.props.books.book && <div>{this.props.books.book.name}</div> } 
             </div>
         )
     }

@@ -3,10 +3,11 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import BookController  from './controllers/book'
 import UserController from './controllers/user'
+// import cors from 'cors'
 const config = require('./config/config').get(process.env.NODE_ENV)
 const app = express()
 
-
+// app.use(cors())
 //MIDDLEWARE//
 app.use(bodyParser.json())
 app.use(cookieParser())

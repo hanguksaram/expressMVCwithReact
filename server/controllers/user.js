@@ -1,7 +1,7 @@
 import UserRepo from '../repos/userRepo'
 import { usersRoute } from '../routes/routes'
 import { auth } from '../middleware/auth'
-import user_reducer from '../../client/src/reducers/user_reducer';
+
 
 
 export default class UserController {
@@ -50,13 +50,13 @@ export default class UserController {
         this._userRepo.findUser(userDto)
             .then((user) => {
                 if (!user)
-                    return res.status(404)
+                    return res.sendStatus(404)
                 user.comparePasswords(userDto.password)
                     .then(() => {
                         return user.generateToken()
                             .then((user) => {
                                 res.cookie('auth', user.token, 
-                                {expires: new Date(Date.now + 1200000)})
+                                {expires: new Date(Date.now() + 1200000)})
                                     .json({
                                         isAuth: true,
                                         id: user._id,

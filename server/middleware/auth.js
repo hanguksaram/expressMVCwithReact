@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
             req.user = user
             next()
         })
-        .catch((e) => res.sendStatus(401).send(e))
+        .catch((e) => res.sendStatus(401))
 
 }
 export { auth }

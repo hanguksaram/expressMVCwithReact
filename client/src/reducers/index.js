@@ -3,8 +3,8 @@ import user from './user_reducer'
 import book from './books_reducer'
 
 const rootReducer = combineReducers({
-    user,
-    book
+    book,
+    user
 })
 
 export default rootReducer
